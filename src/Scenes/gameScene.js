@@ -47,6 +47,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
         },
         sceneStart: () => {
             parentRef.current.className = 'aniObject'
+            setRepeatType(1)
             startSecondPart()
             loadFunc()
         },
@@ -151,7 +152,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo, loadFunc }, ref) => 
                 audioList.successAudio.currentTime = 0;
 
                 // nextFunc()
-                
+
                 if (stepCount == firstStartNum) {
                     startFirstPart()
                     isDisabled = true;
