@@ -4,6 +4,7 @@ import BaseImage from '../components/BaseImage';
 import { UserContext } from '../components/BaseShot';
 import { prePathUrl, getAudioPath, setRepeatType, setRepeatAudio, startRepeatAudio, stopRepeatAudio } from "../components/CommonFunctions";
 import { textInfoList, iconList, gapList } from "../components/CommonVarariant"
+import { setExtraVolume } from '../components/CommonFunctions';
 
 
 const loadCount = 6
@@ -18,13 +19,10 @@ let activeInterval
 let timerList = []
 
 let clickedList = []
-let wordGround = [4, 6, 2]
+let wordGround = [6, 5]
 
 const posInfoList = [
-    { x: 10, y: 40 },
-    { x: 50, y: 40, m: true },
-    { x: 10, y: 70 },
-    { x: 50, y: 70, m: true },
+
 
 
     { x: 1, y: 40 },
@@ -35,8 +33,14 @@ const posInfoList = [
     { x: 68, y: 70, m: true },
 
 
-    { x: 10, y: 55 },
-    { x: 50, y: 55 },
+    { x: 15, y: 40 },
+    { x: 55, y: 40, m: true },
+
+    { x: 1, y: 70 },
+    { x: 36, y: 70 },
+    { x: 68, y: 70, m: true },
+
+
 
 ]
 
@@ -86,19 +90,20 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
 
             setRepeatType(2)
 
-            audioList.bodyAudio1.src = prePathUrl() + "sounds/main/common/review0.mp3"
-            audioList.bodyAudio2.src = prePathUrl() + "sounds/main/common/review1.mp3"
-
             imageCount = 0;
             isEffectPassed = true;
 
             clickedList = []
 
+            setExtraVolume(audioList.commonAudio3, 4)
+            setExtraVolume(audioList.reviewAudio, 4)
+
+            for (let i = 0; i < 11; i++)
+                setExtraVolume(audioList[i], 4)
+
             setRepeatAudio(audioList.commonAudio3)
 
-
             baseObject.current.className = 'aniObject'
-
 
         },
         sceneEnd: () => {
@@ -106,7 +111,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
             isRendered = false;
             isEffectPassed = false;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 11; i++) {
                 audioList[i].currentTime = 0
                 audioList[i].pause();
             }
@@ -118,16 +123,13 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
         if (!isRendered) {
             isRendered = true;
             timerList[6] = setTimeout(() => {
-                audioList.bodyAudio1.play();
-
-                // timerList[7] = setTimeout(() => {
-                //     audioList.bodyAudio2.play();
-
+                audioList.reviewAudio.play();
                 timerList[8] = setTimeout(() => {
+
                     audioList.commonAudio3.play()
                     startRepeatAudio()
-                    // }, audioList.bodyAudio2.duration * 1000 + 300);
-                }, audioList.bodyAudio1.duration * 1000 + 500);
+
+                }, audioList.reviewAudio.duration * 1000 + 500);
             }, 1000);
 
             // baseObject.current.className = 'aniObject'
@@ -287,7 +289,7 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, _geo }, ref) => {
                 >
 
                     <BaseImage url="bg/green_bg.png" />
-                    
+
                     <div
                         style={{
                             position: "fixed", width: _geo.width * 0.5 + "px",

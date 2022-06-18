@@ -13,8 +13,12 @@ export default function Scene18({ nextFunc, _geo, _baseGeo }) {
     const replayBtn = useRef()
     useEffect(() => {
 
-        audioList.bodyAudio1.src = prePathUrl() + "sounds/effect/excellent.mp3"
+
         setRepeatAudio(audioList.replayAudio)
+
+        setExtraVolume(audioList.replayAudio, 3)
+        setExtraVolume(audioList.excellentAudio, 4)
+
         setRepeatType(2)
 
         timerList[0] = setTimeout(() => {
@@ -24,7 +28,7 @@ export default function Scene18({ nextFunc, _geo, _baseGeo }) {
             audioList.yeahAudio.pause();
             audioList.yeahAudio.currentTime = 0;
 
-            audioList.bodyAudio1.play();
+            audioList.excellentAudio.play();
         }, 2000);
 
         timerList[4] = setTimeout(() => {
@@ -60,7 +64,7 @@ export default function Scene18({ nextFunc, _geo, _baseGeo }) {
                 clearTimeout(timer)
             })
 
-            audioList.bodyAudio1.pause();
+            audioList.excellentAudio.pause();
             audioList.replayAudio.pause();
 
             audioList.clapAudio.pause();
@@ -69,6 +73,8 @@ export default function Scene18({ nextFunc, _geo, _baseGeo }) {
             audioList.clapAudio.currentTime = 0;
             audioList.yeahAudio.currentTime = 0;
             audioList.replayAudio.currentTime = 0;
+
+            audioList.excellentAudio.currentTime = 0;
 
             audioList.replayAudio.pause();
 

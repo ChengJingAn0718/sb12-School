@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext, useState } from 'react';
 import "../stylesheets/styles.css";
 import BaseImage from '../components/BaseImage';
 import { UserContext } from '../components/BaseShot';
-import { getAudioPath, prePathUrl } from "../components/CommonFunctions";
+import { getAudioPath, prePathUrl, setExtraVolume } from "../components/CommonFunctions";
 import { MaskComponent } from "../components/CommonComponents"
 
 
@@ -25,14 +25,15 @@ const maskPathList = [
 
 
 const maskTransformList = [
-    { x: -0.15, y: 0.15, s: 1.3 },
+    { x: -0.1, y: 0.1, s: 1.2 },
     { x: -0.25, y: 0.0, s: 1.8 },
     { x: -0.35, y: -0.2, s: 1.9 },
     { x: -0.25, y: 0.5, s: 2 },
     { x: -0.2, y: -0.1, s: 1.9 },
     { x: -0.18, y: 0.0, s: 1.4 },
     { x: 0.1, y: 0.4, s: 1.8 },
-    { x: 0.2, y: 0.2, s: 1.4 },
+    { x: 0.05, y: 0.05, s: 1.1 },
+
     { x: 0.25, y: -0.25, s: 1.5 },
     { x: 0.5, y: 0.2, s: 2 },
     { x: 0.4, y: 0.2, s: 2 },
@@ -46,7 +47,7 @@ let subMaskNum = 0;
 
 // plus values..
 const marginPosList = [
-    { s: 2, l: 0.3, t: 0.7 },
+    { s: 2, l: 0.05, t: 0.8 },
     { s: 2, l: -0.2, t: 0.1 },
     { s: 2, l: -0.3, t: -0.1 },
     { s: 2, l: -0.2, t: 0.5 },
@@ -127,7 +128,6 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
         sceneStart: () => {
             baseObject.current.className = 'aniObject'
             audioList.bodyAudio1.src = getAudioPath('intro/2');
-            // audioList.bodyAudio2.src = getAudioPath('intro/1');
 
             blackWhiteObject.current.style.WebkitMaskImage = 'url("' +
                 returnImgPath(maskPathList[currentMaskNum][0], true) + '")'
@@ -136,12 +136,12 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
             currentImage.current.style.transition = '0.5s'
 
 
-            // setTimeout(() => {
-            //     audioList.bodyAudio2.play()
-            //     setTimeout(() => {
-            //         showIndividualImage()
-            //     }, audioList.bodyAudio2.duration * 1000 + 1000);
-            // }, 3000);
+            setTimeout(() => {
+                setExtraVolume(audioList.bodyAudio1 , 4)
+                setExtraVolume(audioList.bodyAudio2 , 4)
+                setExtraVolume(audioList.bodyAudio3 , 4)
+                setExtraVolume(audioList.bodyAudio4 , 4)
+            }, 2000);
 
             setTimeout(() => {
                 loadFunc()
@@ -173,6 +173,11 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
             'translate(' + maskTransformList[currentMaskNum].x * 100 + '%,'
             + maskTransformList[currentMaskNum].y * 100 + '%) ' +
             'scale(' + maskTransformList[currentMaskNum].s + ') '
+
+        if (currentMaskNum == 0)
+            baseObject.current.style.top = 0;
+        else
+            baseObject.current.style.top = _baseGeo.top + 'px';
 
         setTimeout(() => {
             let timeDuration = audioList.bodyAudio1.duration * 1000 + 500
