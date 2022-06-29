@@ -135,12 +135,13 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
             blackWhiteObject.current.style.transition = "0.5s"
             currentImage.current.style.transition = '0.5s'
 
+            // 4 to 6
 
             setTimeout(() => {
-                setExtraVolume(audioList.bodyAudio1 , 4)
-                setExtraVolume(audioList.bodyAudio2 , 4)
-                setExtraVolume(audioList.bodyAudio3 , 4)
-                setExtraVolume(audioList.bodyAudio4 , 4)
+                setExtraVolume(audioList.bodyAudio1, 6)
+                setExtraVolume(audioList.bodyAudio2, 6)
+                setExtraVolume(audioList.bodyAudio3, 6)
+                setExtraVolume(audioList.bodyAudio4, 6)
             }, 2000);
 
             setTimeout(() => {
@@ -269,7 +270,6 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                         }, 300);
 
                         setTimeout(() => {
-                            // if (currentMaskNum == 0) {
                             if (currentMaskNum == maskPathList.length - 1) {
                                 setTimeout(() => {
                                     baseObject.current.style.transition = '2s'
@@ -381,18 +381,6 @@ const Scene = React.forwardRef(({ nextFunc, _baseGeo, loadFunc, _startTransition
                             <BaseImage
                                 url={'bg/base.png'}
                             />
-
-                            {/* {
-                        outLineRefList.map(
-                            (value, index) =>
-                                <BaseImage
-                                    className='hideObject'
-                                    ref={outLineRefList[index]}
-                                />
-                        )
-
-                    } */}
-
                         </div>
                     </div>
 
